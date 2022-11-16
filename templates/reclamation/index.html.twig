@@ -1,0 +1,36 @@
+{% extends "base/base_admin.html.twig" %}
+
+{% block body %}
+    <h1>Reclamation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Réservation</th>
+                <th>Evaluation</th>
+                <th>Commentaire</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reclamation in reclamations %}
+            <tr>
+                <td>{{ reclamation.id }}</td>
+                <td>{{ reclamation.reservation }}</td>
+                <td>{{ reclamation.evaluation }}</td>
+                <td>{{ reclamation.commentaire }}</td>
+                <td>
+                    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
+                    <a href="{{ path('app_reclamation_delete', {'id': reclamation.id}) }}">delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

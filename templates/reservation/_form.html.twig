@@ -1,0 +1,83 @@
+
+<section class="section section-bg" id="call-to-action" style="background-image: url(assets/images/banner-image-1-1920x500.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="cta-content">
+                    <br>
+                    <br>
+                    <h2>Feel free to <em>Contact Us</em></h2>
+                    <p>Ut consectetur, metus sit amet aliquet placerat, enim est ultricies ligula</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="contact-us" style="margin-top: 0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div id="map">
+                  <iframe src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed" width="100%" height="400px" frameborder="0" style="border:0" allowfullscreen=""></iframe>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="contact-form section-bg" style="background-image: url(assets/images/contact-1-720x480.jpg)">
+                    {{ form_start(form) }}
+                    {{ form_row(form._token) }}
+                      <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                          <fieldset>
+                            <input name="name" type="text" id="name" placeholder="Votre nom*" class="form-control" >
+                            <span style="color:red;"> {% for error in errors %}
+                                {% if error.propertyPath == "client" %}
+                                  * {{ error.message }}
+                                {% endif %}
+                              {% endfor %}</span>
+                          </fieldset>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                          <fieldset>
+                            <input name="prenom" type="text" id="name" placeholder="Votre prénom*" class="form-control">
+                            <span style="color:red;"> {% for error in errors %}
+                                {% if error.propertyPath == "client" %}
+                                  * {{ error.message }}
+                                {% endif %}
+                              {% endfor %}</span>
+                          </fieldset>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                          <fieldset>
+                            {{ form_widget(form.description,{"attr" : {'Placeholder' : "Description" ,  "class" : 'form-control'}}) }}
+                            <span style="color:red;"> {% for error in errors %}
+                                {% if error.propertyPath == "description" %}
+                                  * {{ error.message }}
+                                {% endif %}
+                              {% endfor %}</span>
+                          </fieldset>
+                        </div>
+                        <div class="col-lg-12">
+                          <fieldset>
+                            {{ form_widget(form.service , {"attr" : {"class" : 'form-control'}}) }}
+                            <span style="color:red;"> {% for error in errors %}
+                                {% if error.propertyPath == "service" %}
+                                  * {{ error.message }}
+                                {% endif %}
+                              {% endfor %}</span>
+                          </fieldset>
+                        </div>
+                        <br>
+                        <div class="col-lg-12" style="margin-top:50px;">
+                          <fieldset>
+                            <button type="submit" id="form-submit" class="main-button" formnovalidate>Réserver</button>
+                          </fieldset>
+                        </div>
+                      </div>
+                      {{ form_end(form , {'render_rest' : false}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

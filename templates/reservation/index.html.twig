@@ -1,0 +1,45 @@
+{% extends "base/base_admin.html.twig" %}
+
+{% block body %}
+    <h1>Liste des réservation</h1>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Client</th>
+                    <th>Etat</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.id }}</td>
+                    <td>{{ reservation.service }}</td>
+                    <td>{{ reservation.date ? reservation.date|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ reservation.description }}</td>
+                    <td>{{ reservation.client }}</td>
+                    <td>{{ reservation.etat }}</td>
+                    <td>
+                        <a href="{{ path('app_reservation_delete', {'id': reservation.id}) }}">delete</a>
+                        <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    {# <a href="{{ path('app_reservation_new') }}" class="btn btn-primary">Create new</a> #}
+{% endblock %}

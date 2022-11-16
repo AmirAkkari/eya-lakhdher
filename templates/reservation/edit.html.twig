@@ -1,0 +1,59 @@
+{% extends "base/base_admin.html.twig" %} {% block body %}
+<h1></h1>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Edit Reservation</h5>
+
+    <!-- General Form Elements -->
+    {{ form_start(form) }}
+    {{ form_row(form._token) }}
+    <div class="row mb-3">
+      <label for="inputEmail" class="col-sm-2 col-form-label">Client</label>
+      <div class="col-sm-10">
+        {{ form_widget(form.client,{"attr" : {'Placeholder' : "Client" ,  "class" : 'form-control'
+        }}) }}
+        <span style="color: red">
+          {% for error in errors %} {% if error.propertyPath == "client" %} *
+          {{ error.message }} {% endif %} {% endfor %}</span
+        >
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="inputPassword" class="col-sm-2 col-form-label"
+        >Description</label
+      >
+      <div class="col-sm-10">
+        {{ form_widget(form.description,{"attr" : {'Placeholder' : "Description" ,  "class" : 'form-control'
+        }}) }}
+        <span style="color: red">
+          {% for error in errors %} {% if error.propertyPath == "description" %}
+          * {{ error.message }} {% endif %} {% endfor %}</span
+        >
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="inputNumber" class="col-sm-2 col-form-label">Servce</label>
+      <div class="col-sm-10">
+        {{ form_widget(form.service , {"attr" : {"class" : 'form-select' , "aria-label" : "Default select example"
+        }}) }}
+        <span style="color: red">
+          {% for error in errors %} {% if error.propertyPath == "service" %} *
+          {{ error.message }} {% endif %} {% endfor %}</span
+        >
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-sm-10">
+        <button type="submit" class="btn btn-primary">Modifier</button>
+      </div>
+    </div>
+
+    {{ form_end(form, { render_rest: false }) }}
+  </div>
+</div>
+
+<a href="{{ path('app_reservation_index') }}">back to list</a>
+
+{% endblock %}
