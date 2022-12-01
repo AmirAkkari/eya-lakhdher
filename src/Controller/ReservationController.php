@@ -51,8 +51,8 @@ class ReservationController extends AbstractController
             $reservationRepository->save($reservation, true);
 
             $message = (new \Swift_Message('Hello Email'))
-            ->setFrom('benabdallah.eya@esprit.tn')
-            ->setTo('akkari.amir23@gmail.com')
+            ->setFrom('#')
+            ->setTo('#')
             ->setBody(
                 
                     "<p>Merci pour votre réservation Mr/Mme " .$reservation->getClient()." , le service ".$reservation->getService()." est maintenant réservé !</p>"
