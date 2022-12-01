@@ -24,7 +24,7 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ReservationRepository $reservationRepository, ValidatorInterface $validator): Response
+    public function new(Request $request, ReservationRepository $reservationRepository, ValidatorInterface $validator ,\Swift_Mailer $mailer): Response
     {
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
@@ -50,7 +50,18 @@ class ReservationController extends AbstractController
             $reservation->setDate(new DateTime("now"));
             $reservationRepository->save($reservation, true);
 
-
+            $message = (new \Swift_Message('Hello Email'))
+            ->setFrom('benabdallah.eya@esprit.tn')
+            ->setTo('akkari.amir23@gmail.com')
+            ->setBody(
+                
+                    "<p>Merci pour votre réservation Mr/Mme " .$reservation->getClient()." , le service ".$reservation->getService()." est maintenant réservé !</p>"
+                ,
+                'text/html'
+            )
+        ;
+    
+        $mailer->send($message);
             $this->addFlash("success_message","Reservation faite avec succés");
             return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -71,7 +82,7 @@ class ReservationController extends AbstractController
     // }
 
     #[Route('/{id}/edit', name: 'app_reservation_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
+    public function edit(Request $request, Reservation $reservation, ReservationRepository $reservationRepository, ): Response
     {
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
@@ -80,6 +91,7 @@ class ReservationController extends AbstractController
             
             $reservationRepository->save($reservation, true);
 
+            
             return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
         }
 
