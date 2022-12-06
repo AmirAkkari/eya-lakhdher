@@ -44,6 +44,12 @@
           {{ form_start(form) }}
           {{ form_row(form._token) }}
           <div class="row">
+              <div class="col-md-12" id="qr" >
+                <img src="{{ qr_code_url("Passer votre réclamation") }}" />
+              </div>
+          </div>
+          <br>
+          <div class="row">
             <div class="col-md-12 col-sm-12">
               <fieldset>
                 {{ form_widget(form.reservation,{"attr" : {'Placeholder' : "Réservation" ,  "class" : 'form-control'

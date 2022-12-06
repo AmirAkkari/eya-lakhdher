@@ -1,45 +1,92 @@
-{% extends "base/base_admin.html.twig" %}
-
-{% block body %}
-    <h1>Liste des réservation</h1>
+{% extends "base/base_admin.html.twig" %} {% block body %}
+<h1>Liste des réservation</h1>
 
 <div class="card">
-    <div class="card-body">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Service</th>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Client</th>
-                    <th>Etat</th>
-                    <th>actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for reservation in reservations %}
-                <tr>
-                    <td>{{ reservation.id }}</td>
-                    <td>{{ reservation.service }}</td>
-                    <td>{{ reservation.date ? reservation.date|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ reservation.description }}</td>
-                    <td>{{ reservation.client }}</td>
-                    <td>{{ reservation.etat }}</td>
-                    <td>
-                        <a href="{{ path('app_reservation_delete', {'id': reservation.id}) }}">delete</a>
-                        <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <center>
+          <input
+            type="search"
+            class="form-control"
+            id="searchE"
+            placeholder="Rechercher..."
+          />
+        </center>
+      </div>
     </div>
+    <br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Service</th>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Client</th>
+          <th>Etat</th>
+          <th>actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reservation in reservations %}
+        <tr class="item id{{ reservation.id }}">
+          <td>{{ reservation.id }}</td>
+          <td>{{ reservation.service }}</td>
+          <td>
+            {{ reservation.date ? reservation.date|date('Y-m-d H:i:s') : '' }}
+          </td>
+          <td>{{ reservation.description }}</td>
+          <td>{{ reservation.client }}</td>
+          <td>{{ reservation.etat }}</td>
+          <td>
+            <a
+              href="{{
+                path('app_reservation_delete', { id: reservation.id })
+              }}"
+              >delete</a
+            >
+            <a href="{{ path('app_reservation_edit', { id: reservation.id }) }}"
+              >edit</a
+            >
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="6">no records found</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
-
-    {# <a href="{{ path('app_reservation_new') }}" class="btn btn-primary">Create new</a> #}
-{% endblock %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const search = document.querySelector('#searchE')
+    const events = document.querySelectorAll(".item");
+  
+    search.addEventListener('keyup' , (e) => {
+      $.ajax({
+        url: '{{ path("app_reservation_search") }}',
+        type: "GET",
+        data: { query: e.target.value },
+        success: function (data) {
+          events.forEach(e=>{
+            e.hidden = true
+          })
+          JSON.parse(data).forEach((elem) => {
+            document.querySelector(`.id${elem.id}`).hidden = false
+          });
+          
+        },
+        error: function () {
+          
+        },
+      });
+    })
+  </script>
+{#
+<a href="{{ path('app_reservation_new') }}" class="btn btn-primary"
+  >Create new</a
+>
+#} {% endblock %}
